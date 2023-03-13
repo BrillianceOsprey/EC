@@ -24,7 +24,7 @@ class CartScreen extends StatefulWidget {
 class _CartScreenState extends State<CartScreen> {
   @override
   void initState() {
-    StripeService.init();
+    // StripeService.init();
     super.initState();
   }
 
@@ -81,20 +81,20 @@ Widget _bottomCheckoutSectiomn(BuildContext context, double totalAmount) {
 
   final cartProvider = Provider.of<CartProvider>(context);
 
-  StripeTransactionResponse? response;
+  // StripeTransactionResponse? response;
 
-  Future<void> payWithCard({required int amount}) async {
-    response = await StripeService.payWithNewCard(
-        amount: amount.toString(), currency: 'USD');
+  // Future<void> payWithCard({required int amount}) async {
+  //   response = await StripeService.payWithNewCard(
+  //       amount: amount.toString(), currency: 'USD');
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(response!.message),
-        duration:
-            Duration(milliseconds: response!.success == true ? 1200 : 3000),
-      ),
-    );
-  }
+  //   ScaffoldMessenger.of(context).showSnackBar(
+  //     SnackBar(
+  //       content: Text(response!.message),
+  //       duration:
+  //           Duration(milliseconds: response!.success == true ? 1200 : 3000),
+  //     ),
+  //   );
+  // }
 
   return SizedBox(
     width: double.infinity,
@@ -116,30 +116,30 @@ Widget _bottomCheckoutSectiomn(BuildContext context, double totalAmount) {
             onPressed: () async {
               double amountInCents = totalAmount * 1000;
               int integerAMount = (amountInCents / 10).ceil();
-              await payWithCard(amount: integerAMount);
+              // await payWithCard(amount: integerAMount);
 
-              if (response!.success == true) {
-                User? user = FirebaseAuth.instance.currentUser;
-                final _uid = user!.uid;
-                cartProvider.cartList.forEach((key, orderValue) async {
-                  final orderId = _uuid.v4();
-                  try {
-                    await FirebaseFirestore.instance
-                        .collection('orders')
-                        .doc(orderId)
-                        .set({
-                      'orderId': orderId,
-                      'userId': _uid,
-                      'productId': orderValue.productId,
-                      'title': orderValue.title,
-                      'price': orderValue.price,
-                      'imageUrl': orderValue.imageUrl,
-                      'quantity': orderValue.quantity,
-                      'orderDate': Timestamp.now(),
-                    });
-                  } catch (error) {}
-                });
-              }
+              // if (response!.success == true) {
+              //   User? user = FirebaseAuth.instance.currentUser;
+              //   final _uid = user!.uid;
+              //   cartProvider.cartList.forEach((key, orderValue) async {
+              //     final orderId = _uuid.v4();
+              //     try {
+              //       await FirebaseFirestore.instance
+              //           .collection('orders')
+              //           .doc(orderId)
+              //           .set({
+              //         'orderId': orderId,
+              //         'userId': _uid,
+              //         'productId': orderValue.productId,
+              //         'title': orderValue.title,
+              //         'price': orderValue.price,
+              //         'imageUrl': orderValue.imageUrl,
+              //         'quantity': orderValue.quantity,
+              //         'orderDate': Timestamp.now(),
+              //       });
+              //     } catch (error) {}
+              //   });
+              // }
             },
             child: Text(
               '   C H E C K O U T   ',

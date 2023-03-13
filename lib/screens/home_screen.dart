@@ -1,7 +1,5 @@
-import 'package:backdrop/app_bar.dart';
-import 'package:backdrop/button.dart';
-import 'package:backdrop/scaffold.dart';
-import 'package:badges/badges.dart';
+import 'package:backdrop/backdrop.dart';
+import 'package:badges/badges.dart' as badges;
 import 'package:carousel_pro_nullsafety/carousel_pro_nullsafety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_shop_cpt21/models%20&%20providers/product.dart';
@@ -46,6 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final productData = Provider.of<ProductProvider>(context);
     final popularProduct = productData.popularProducts;
+    print('Product list ${popularProduct.length}');
     productData.fetchProducts();
 
     return Scaffold(
@@ -59,10 +58,10 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           actions: [
             Consumer<WishlistProvider>(builder: (context, wp, _) {
-              return Badge(
-                toAnimate: true,
-                animationType: BadgeAnimationType.slide,
-                position: BadgePosition.topEnd(top: 5, end: 7),
+              return badges.Badge(
+                // toAnimate: true,
+                // animationType: BadgeAnimationType.slide,
+                // position: BadgePosition.topEnd(top: 5, end: 7),
                 badgeContent: Text(
                   wp.wishlistList.length.toString(),
                   style: TextStyle(color: Colors.white),
@@ -199,6 +198,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             SizedBox(
+              // color: Colors.amber,
               height: 300,
               width: double.infinity,
               child: ListView.builder(

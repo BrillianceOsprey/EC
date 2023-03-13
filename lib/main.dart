@@ -54,7 +54,7 @@ class MyApp extends StatelessWidget {
               HomeScreen.routeName: (ctx) => const HomeScreen(),
               FeedsScreen.routeName: (ctx) => FeedsScreen(),
               SearchScreen.routeName: (ctx) => const SearchScreen(),
-              CartScreen.routeName: (ctx) => CartScreen(),
+              CartScreen.routeName: (ctx) => const CartScreen(),
               UserScreen.routeName: (ctx) => const UserScreen(),
               BrandsNavRailScreen.routeName: (ctx) =>
                   const BrandsNavRailScreen(),
@@ -64,10 +64,12 @@ class MyApp extends StatelessWidget {
               CategoriesFeedScreen.routeName: (ctx) =>
                   const CategoriesFeedScreen(),
               LandingScreen.routeName: (ctx) => const LandingScreen(),
-              LoginScreen.routeName: (ctx) => LoginScreen(),
-              SignupScreen.routeName: (ctx) => SignupScreen(),
-              UploadProductScreen.routeName: (ctx) => UploadProductScreen(),
-              ResetPasswordScreen.routeName: (ctx) => ResetPasswordScreen(),
+              LoginScreen.routeName: (ctx) => const LoginScreen(),
+              SignupScreen.routeName: (ctx) => const SignupScreen(),
+              UploadProductScreen.routeName: (ctx) =>
+                  const UploadProductScreen(),
+              ResetPasswordScreen.routeName: (ctx) =>
+                  const ResetPasswordScreen(),
               OrderScreen.routeName: (ctx) => const OrderScreen(),
             });
       }),

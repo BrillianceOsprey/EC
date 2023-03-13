@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
 import 'package:flutter_shop_cpt21/models%20&%20providers/product.dart';
 import 'package:flutter_shop_cpt21/screens/inner_screens/product_details_screen.dart';
@@ -99,14 +99,13 @@ class _FeedsProductState extends State<FeedsProduct> {
               icon: const Icon(Icons.more_horiz),
             ),
           ),
-          Badge(
-            toAnimate: true,
-            animationType: BadgeAnimationType.slide,
-            shape: BadgeShape.square,
-            badgeColor: Colors.deepPurpleAccent,
-            borderRadius: BorderRadius.circular(8),
-            badgeContent:
-                const Text('New', style: TextStyle(color: Colors.white)),
+          const badges.Badge(
+            // toAnimate: true,
+            // animationType: BadgeAnimationType.slide,
+            // shape: BadgeShape.square,
+            // badgeColor: Colors.deepPurpleAccent,
+            // borderRadius: BorderRadius.circular(8),
+            badgeContent: Text('New', style: TextStyle(color: Colors.white)),
           ),
         ],
       ),

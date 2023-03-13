@@ -1,4 +1,4 @@
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
 import 'package:flutter_shop_cpt21/models%20&%20providers/cart.dart';
 import 'package:flutter_shop_cpt21/models%20&%20providers/product.dart';
@@ -15,18 +15,21 @@ class ProductDetailsScreen extends StatefulWidget {
   const ProductDetailsScreen({Key? key}) : super(key: key);
 
   @override
-  _ProductDetailsScreenState createState() => _ProductDetailsScreenState();
+  ProductDetailsScreenState createState() => ProductDetailsScreenState();
 }
 
-class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
+class ProductDetailsScreenState extends State<ProductDetailsScreen> {
   GlobalKey previewContainer = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
     final productId = ModalRoute.of(context)!.settings.arguments as String;
+    print('productId $productId');
     final productProvider = Provider.of<ProductProvider>(context);
     List<Product> productsList = productProvider.products();
+    print('productId list $productsList');
     final product = productProvider.getById(productId);
+
     final cartProvider = Provider.of<CartProvider>(context);
     final wishlistProvider = Provider.of<WishlistProvider>(context);
 
@@ -38,16 +41,16 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         wishlistProvider: wishlistProvider,
       ),
       appBar: AppBar(
-        title: Text('Details'),
+        title: const Text('Details'),
         actions: [
           Consumer<WishlistProvider>(builder: (context, wp, _) {
-            return Badge(
-              toAnimate: true,
-              animationType: BadgeAnimationType.slide,
-              position: BadgePosition.topEnd(top: 5, end: 7),
+            return badges.Badge(
+              // toAnimate: true,
+              // animationType: BadgeAnimationType.slide,
+              // position: BadgePosition.topEnd(top: 5, end: 7),
               badgeContent: Text(
                 wp.wishlistList.length.toString(),
-                style: TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white),
               ),
               child: IconButton(
                 onPressed: () {
@@ -58,13 +61,13 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
             );
           }),
           Consumer<CartProvider>(builder: (context, cp, _) {
-            return Badge(
-              toAnimate: true,
-              animationType: BadgeAnimationType.slide,
-              position: BadgePosition.topEnd(top: 5, end: 7),
+            return badges.Badge(
+              // toAnimate: true,
+              // animationType: BadgeAnimationType.slide,
+              // position: BadgePosition.topEnd(top: 5, end: 7),
               badgeContent: Text(
                 cp.cartList.length.toString(),
-                style: TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white),
               ),
               child: IconButton(
                 onPressed: () {
@@ -79,7 +82,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       body: Stack(
         children: [
           Container(
-            foregroundDecoration: BoxDecoration(color: Colors.black12),
+            foregroundDecoration: const BoxDecoration(color: Colors.black12),
             height: MediaQuery.of(context).size.height * 0.45,
             width: double.infinity,
             child: Image.network(product.imageUrl),
@@ -116,11 +119,11 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Container(
+                            SizedBox(
                               width: MediaQuery.of(context).size.width * 0.9,
                               child: Text(
-                                '${product.title}',
-                                style: TextStyle(
+                                product.title,
+                                style: const TextStyle(
                                   fontSize: 28,
                                   fontWeight: FontWeight.w600,
                                 ),
@@ -129,7 +132,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                             const SizedBox(height: 6),
                             Text(
                               '\$ ${product.price}',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 21,
                                 color: Colors.purple,
                                 fontWeight: FontWeight.w600,
@@ -139,8 +142,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         ),
                       ),
                       const SizedBox(height: 3),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 8),
                         child: Divider(
                           thickness: 1,
                           color: Colors.grey,
@@ -152,15 +155,15 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         padding: const EdgeInsets.all(16),
                         child: Text(
                           '${product.description}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 21,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
                       ),
                       const SizedBox(height: 3),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 8),
                         child: Divider(
                           thickness: 1,
                           color: Colors.grey,
@@ -196,8 +199,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             const SizedBox(height: 10),
-                            Padding(
-                              padding: const EdgeInsets.all(8),
+                            const Padding(
+                              padding: EdgeInsets.all(8),
                               child: Text(
                                 'No reviews yet',
                                 style: TextStyle(
@@ -205,8 +208,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                 ),
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(8),
+                            const Padding(
+                              padding: EdgeInsets.all(8),
                               child: Text(
                                 'Be The First To Review!',
                                 style: TextStyle(
@@ -230,7 +233,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 Container(
                   width: double.infinity,
                   padding: const EdgeInsets.all(8),
-                  child: Text(
+                  child: const Text(
                     'Suggested Product: ',
                     style: TextStyle(
                       fontSize: 20,
@@ -286,14 +289,14 @@ class _contentRow extends StatelessWidget {
         children: [
           Text(
             '${title}: ',
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 21,
               fontWeight: FontWeight.w600,
             ),
           ),
           Text(
             nameTitle,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 20,
             ),
           ),
@@ -342,7 +345,7 @@ class _bottomSheet extends StatelessWidget {
                   cartProvider.cartList.containsKey(productId)
                       ? 'IN CART'
                       : 'ADD TO CART',
-                  style: TextStyle(fontSize: 18, color: Colors.white),
+                  style: const TextStyle(fontSize: 18, color: Colors.white),
                 ),
               ),
             ),
@@ -356,7 +359,7 @@ class _bottomSheet extends StatelessWidget {
             child: Center(
               child: TextButton(
                 onPressed: () {},
-                child: Text(
+                child: const Text(
                   'BUY NOW',
                   style: TextStyle(fontSize: 18, color: Colors.black),
                 ),
@@ -380,11 +383,11 @@ class _bottomSheet extends StatelessWidget {
                   );
                 },
                 icon: wishlistProvider.wishlistList.containsKey(productId)
-                    ? Icon(
+                    ? const Icon(
                         Icons.favorite,
                         color: Colors.red,
                       )
-                    : Icon(Icons.favorite_border),
+                    : const Icon(Icons.favorite_border),
               ),
             ),
           ),

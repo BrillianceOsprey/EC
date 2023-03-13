@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as badges;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -120,23 +120,23 @@ class _UserScreenState extends State<UserScreen> {
                               Navigator.of(context)
                                   .pushNamed(WishlistScreen.routeName);
                             },
-                            leading: Badge(
-                              toAnimate: true,
-                              animationType: BadgeAnimationType.slide,
-                              position: BadgePosition.topEnd(top: 0, end: 0),
-                              badgeColor: Colors.indigo,
+                            leading: badges.Badge(
+                              // toAnimate: true,
+                              // animationType: BadgeAnimationType.slide,
+                              // position: BadgePosition.topEnd(top: 0, end: 0),
+                              // badgeColor: Colors.indigo,
                               badgeContent: Text(
                                 wp.wishlistList.length.toString(),
-                                style: TextStyle(color: Colors.white),
+                                style: const TextStyle(color: Colors.white),
                               ),
-                              child: Icon(
+                              child: const Icon(
                                 Icons.favorite,
                                 size: 40,
                                 color: Colors.red,
                               ),
                             ),
-                            title: Text('Wishlist'),
-                            trailing: Icon(Icons.arrow_forward_ios),
+                            title: const Text('Wishlist'),
+                            trailing: const Icon(Icons.arrow_forward_ios),
                           ),
                         );
                       }),
@@ -148,22 +148,22 @@ class _UserScreenState extends State<UserScreen> {
                               Navigator.of(context)
                                   .pushNamed(CartScreen.routeName);
                             },
-                            leading: Badge(
-                              toAnimate: true,
-                              animationType: BadgeAnimationType.slide,
-                              position: BadgePosition.topEnd(top: 0, end: 0),
+                            leading: badges.Badge(
+                              // toAnimate: true,
+                              // animationType: BadgeAnimationType.slide,
+                              // position: BadgePosition.topEnd(top: 0, end: 0),
                               badgeContent: Text(
                                 cp.cartList.length.toString(),
-                                style: TextStyle(color: Colors.white),
+                                style: const TextStyle(color: Colors.white),
                               ),
-                              child: Icon(
+                              child: const Icon(
                                 Icons.shopping_cart,
                                 size: 40,
                                 color: Colors.deepPurpleAccent,
                               ),
                             ),
-                            title: Text('Wishlist'),
-                            trailing: Icon(Icons.arrow_forward_ios),
+                            title: const Text('Wishlist'),
+                            trailing: const Icon(Icons.arrow_forward_ios),
                           ),
                         );
                       }),
@@ -175,23 +175,23 @@ class _UserScreenState extends State<UserScreen> {
                               Navigator.of(context)
                                   .pushNamed(OrderScreen.routeName);
                             },
-                            leading: Badge(
-                              toAnimate: true,
-                              animationType: BadgeAnimationType.slide,
-                              position: BadgePosition.topEnd(top: 0, end: 0),
-                              badgeColor: Colors.indigo,
+                            leading: badges.Badge(
+                              // toAnimate: true,
+                              // animationType: BadgeAnimationType.slide,
+                              // position: BadgePosition.topEnd(top: 0, end: 0),
+                              // badgeColor: Colors.indigo,
                               badgeContent: Text(
                                 wp.wishlistList.length.toString(),
-                                style: TextStyle(color: Colors.white),
+                                style: const TextStyle(color: Colors.white),
                               ),
-                              child: Icon(
+                              child: const Icon(
                                 Icons.shopping_bag,
                                 size: 40,
                                 color: Colors.greenAccent,
                               ),
                             ),
-                            title: Text('Orders'),
-                            trailing: Icon(Icons.arrow_forward_ios),
+                            title: const Text('Orders'),
+                            trailing: const Icon(Icons.arrow_forward_ios),
                           ),
                         );
                       }),

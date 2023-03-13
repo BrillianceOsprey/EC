@@ -1,4 +1,4 @@
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
 import 'package:flutter_shop_cpt21/models%20&%20providers/cart.dart';
 import 'package:flutter_shop_cpt21/models%20&%20providers/product.dart';
@@ -27,6 +27,7 @@ class _FeedsScreenState extends State<FeedsScreen> {
   Widget build(BuildContext context) {
     final productProvider = Provider.of<ProductProvider>(context);
     List<Product> productsList = productProvider.products();
+    print('Product list $productsList');
 
     final popular = ModalRoute.of(context)!.settings.arguments.toString();
 
@@ -39,10 +40,10 @@ class _FeedsScreenState extends State<FeedsScreen> {
         title: const Text('Feeds Screen'),
         actions: [
           Consumer<WishlistProvider>(builder: (context, wp, _) {
-            return Badge(
-              toAnimate: true,
-              animationType: BadgeAnimationType.slide,
-              position: BadgePosition.topEnd(top: 5, end: 7),
+            return badges.Badge(
+              // toAnimate: true,
+              // animationType: BadgeAnimationType.slide,
+              // position: BadgePosition.topEnd(top: 5, end: 7),
               badgeContent: Text(wp.wishlistList.length.toString()),
               child: IconButton(
                 onPressed: () {
@@ -53,10 +54,10 @@ class _FeedsScreenState extends State<FeedsScreen> {
             );
           }),
           Consumer<CartProvider>(builder: (context, cp, _) {
-            return Badge(
-              toAnimate: true,
-              animationType: BadgeAnimationType.slide,
-              position: BadgePosition.topEnd(top: 5, end: 7),
+            return badges.Badge(
+              // toAnimate: true,
+              // animationType: BadgeAnimationType.slide,
+              // position: BadgePosition.topEnd(top: 5, end: 7),
               badgeContent: Text(cp.cartList.length.toString()),
               child: IconButton(
                 onPressed: () {

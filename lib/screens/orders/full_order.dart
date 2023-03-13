@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_shop_cpt21/models%20&%20providers/order.dart';
+import 'package:flutter_shop_cpt21/models%20&%20providers/order.dart' as order;
 import 'package:flutter_shop_cpt21/screens/inner_screens/product_details_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -16,12 +16,12 @@ class FullOrder extends StatefulWidget {
 class _FullOrderState extends State<FullOrder> {
   @override
   Widget build(BuildContext context) {
-    final order = Provider.of<Order>(context);
+    final orders = Provider.of<order.Order>(context);
     return InkWell(
       onTap: () {
         Navigator.of(context).pushNamed(
           ProductDetailsScreen.routeName,
-          arguments: order.productId,
+          arguments: orders.productId,
         );
       },
       child: Padding(
@@ -44,7 +44,7 @@ class _FullOrderState extends State<FullOrder> {
                   color: Colors.grey,
                   image: DecorationImage(
                     image: NetworkImage(
-                      order.imageUrl,
+                      orders.imageUrl,
                     ),
                     // fit: BoxFit.cover,
                   ),
@@ -60,7 +60,7 @@ class _FullOrderState extends State<FullOrder> {
                       children: [
                         Flexible(
                           child: Text(
-                            order.title,
+                            orders.title,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(fontSize: 18),
                           ),
@@ -71,7 +71,7 @@ class _FullOrderState extends State<FullOrder> {
                             onTap: () {
                               FirebaseFirestore.instance
                                   .collection('orders')
-                                  .doc(order.orderId)
+                                  .doc(orders.orderId)
                                   .delete();
                             },
                             child: const Icon(
@@ -91,7 +91,7 @@ class _FullOrderState extends State<FullOrder> {
                         ),
                         Flexible(
                           child: Text(
-                            '\$ ${order.price}',
+                            '\$ ${orders.price}',
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(fontSize: 16),
                           ),
@@ -106,7 +106,7 @@ class _FullOrderState extends State<FullOrder> {
                         ),
                         Flexible(
                           child: Text(
-                            'X ${order.quantity}',
+                            'X ${orders.quantity}',
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(fontSize: 16),
                           ),

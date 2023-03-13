@@ -38,7 +38,7 @@ class PopularProducts extends StatelessWidget {
                       );
                     },
                     child: ClipRRect(
-                      borderRadius: BorderRadius.only(
+                      borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(12),
                         topRight: Radius.circular(12),
                       ),
@@ -63,8 +63,8 @@ class PopularProducts extends StatelessWidget {
                         );
                       },
                       icon: wp.wishlistList.containsKey(productAttrribute.id)
-                          ? Icon(Icons.favorite, color: Colors.red)
-                          : Icon(
+                          ? const Icon(Icons.favorite, color: Colors.red)
+                          : const Icon(
                               Icons.favorite,
                               color: Colors.white,
                             ),
@@ -79,7 +79,7 @@ class PopularProducts extends StatelessWidget {
                       padding: const EdgeInsets.all(4.0),
                       child: Text(
                         '\$ ${productAttrribute.price}',
-                        style: TextStyle(fontSize: 16),
+                        style: const TextStyle(fontSize: 16),
                       ),
                     ),
                   ),
@@ -124,8 +124,8 @@ class PopularProducts extends StatelessWidget {
                               },
                     child:
                         cartProvider.cartList.containsKey(productAttrribute.id)
-                            ? Icon(Icons.check)
-                            : Icon(Icons.add_shopping_cart),
+                            ? const Icon(Icons.check)
+                            : const Icon(Icons.add_shopping_cart),
                   ),
                 ],
               ),
