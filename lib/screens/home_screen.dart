@@ -39,13 +39,13 @@ class _HomeScreenState extends State<HomeScreen> {
     'assets/images/nike.jpeg',
     'assets/images/samsung.jpeg',
   ];
-
+  ProductProvider productProvider = ProductProvider();
   @override
   Widget build(BuildContext context) {
-    final productData = Provider.of<ProductProvider>(context);
-    final popularProduct = productData.popularProducts;
+    // final productData = Provider.of<ProductProvider>(context);
+    final popularProduct = productProvider.popularProducts;
     print('Product list ${popularProduct.length}');
-    productData.fetchProducts();
+    productProvider.fetchProducts();
 
     return Scaffold(
       body: BackdropScaffold(

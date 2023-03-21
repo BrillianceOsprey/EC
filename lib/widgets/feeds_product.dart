@@ -8,11 +8,13 @@ import 'package:flutter_shop_cpt21/widgets/feeds_product_dialog.dart';
 import 'package:provider/provider.dart';
 
 class FeedsProduct extends StatefulWidget {
+  const FeedsProduct({super.key});
+
   @override
-  _FeedsProductState createState() => _FeedsProductState();
+  FeedsProductState createState() => FeedsProductState();
 }
 
-class _FeedsProductState extends State<FeedsProduct> {
+class FeedsProductState extends State<FeedsProduct> {
   @override
   Widget build(BuildContext context) {
     final productAttribute = Provider.of<Product>(context);
@@ -22,6 +24,11 @@ class _FeedsProductState extends State<FeedsProduct> {
           ProductDetailsScreen.routeName,
           arguments: productAttribute.id,
         );
+        // Navigator.of(context).push(MaterialPageRoute(builder: (cxt) {
+        //   return ProductDetailsScreen(
+        //     productId: productAttribute.id,
+        //   );
+        // }));
       },
       child: Stack(
         children: [
@@ -57,7 +64,7 @@ class _FeedsProductState extends State<FeedsProduct> {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    '\$ ${productAttribute.price}',
+                    '\$ ${productAttribute.price.toString()}',
                     maxLines: 1,
                     style: const TextStyle(
                       fontSize: 16,
@@ -70,7 +77,7 @@ class _FeedsProductState extends State<FeedsProduct> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Quantity: ${productAttribute.quantity} left',
+                        'Quantity: ${productAttribute.quantity.toString()} left',
                         maxLines: 1,
                         style: const TextStyle(
                           fontSize: 12,

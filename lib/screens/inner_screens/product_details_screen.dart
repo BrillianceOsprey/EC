@@ -11,8 +11,8 @@ import '../wishlist/wishlist_screen.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
   static const routeName = '/product-details-screen';
-
-  const ProductDetailsScreen({Key? key}) : super(key: key);
+  final String? productId;
+  const ProductDetailsScreen({Key? key, this.productId}) : super(key: key);
 
   @override
   ProductDetailsScreenState createState() => ProductDetailsScreenState();
@@ -20,21 +20,25 @@ class ProductDetailsScreen extends StatefulWidget {
 
 class ProductDetailsScreenState extends State<ProductDetailsScreen> {
   GlobalKey previewContainer = GlobalKey();
-
+  ProductProvider productProvider = ProductProvider();
+  CartProvider cartProvider = CartProvider();
+  WishlistProvider wishlistProvider = WishlistProvider();
   @override
   Widget build(BuildContext context) {
     final productId = ModalRoute.of(context)!.settings.arguments as String;
     print('productId $productId');
-    final productProvider = Provider.of<ProductProvider>(context);
+    // final productProvider = Provider.of<ProductProvider>(context);
+    // print('productId provider ${productProvider.products()}');
     List<Product> productsList = productProvider.products();
     print('productId list $productsList');
     final product = productProvider.getById(productId);
+    print('productId list ${product.title}');
 
-    final cartProvider = Provider.of<CartProvider>(context);
-    final wishlistProvider = Provider.of<WishlistProvider>(context);
+    // final cartProvider = Provider.of<CartProvider>(context);
+    // final wishlistProvider = Provider.of<WishlistProvider>(context);
 
     return Scaffold(
-      bottomSheet: _bottomSheet(
+      bottomSheet: BottomSheet(
         cartProvider: cartProvider,
         product: product,
         productId: productId,
@@ -77,6 +81,9 @@ class ProductDetailsScreenState extends State<ProductDetailsScreen> {
               ),
             );
           }),
+          const SizedBox(
+            width: 30,
+          )
         ],
       ),
       body: Stack(
@@ -170,19 +177,19 @@ class ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           height: 1,
                         ),
                       ),
-                      _contentRow(
+                      ContentRow(
                         title: 'Brand',
                         nameTitle: '${product.brand}',
                       ),
-                      _contentRow(
+                      ContentRow(
                         title: 'Quantity',
-                        nameTitle: '${product.quantity} left',
+                        nameTitle: '${product.quantity.toString()} left',
                       ),
-                      _contentRow(
+                      ContentRow(
                         title: 'Category',
                         nameTitle: '${product.productCategoryName}',
                       ),
-                      _contentRow(
+                      ContentRow(
                         title: 'Popularity',
                         nameTitle: product.isPopular ? 'Popular' : 'Barely',
                       ),
@@ -197,9 +204,9 @@ class ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         width: double.infinity,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            const SizedBox(height: 10),
-                            const Padding(
+                          children: const [
+                            SizedBox(height: 10),
+                            Padding(
                               padding: EdgeInsets.all(8),
                               child: Text(
                                 'No reviews yet',
@@ -208,7 +215,7 @@ class ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                 ),
                               ),
                             ),
-                            const Padding(
+                            Padding(
                               padding: EdgeInsets.all(8),
                               child: Text(
                                 'Be The First To Review!',
@@ -218,8 +225,8 @@ class ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                 ),
                               ),
                             ),
-                            const SizedBox(height: 70),
-                            const Divider(
+                            SizedBox(height: 70),
+                            Divider(
                               thickness: 1,
                               color: Colors.grey,
                               height: 1,
@@ -256,7 +263,7 @@ class ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           width: 200,
                           child: ChangeNotifierProvider.value(
                             value: productsList[i],
-                            child: FeedsProduct(),
+                            child: const FeedsProduct(),
                           ),
                         ),
                       );
@@ -272,10 +279,10 @@ class ProductDetailsScreenState extends State<ProductDetailsScreen> {
   }
 }
 
-class _contentRow extends StatelessWidget {
+class ContentRow extends StatelessWidget {
   final String title;
   final String nameTitle;
-  const _contentRow({
+  const ContentRow({
     required this.title,
     required this.nameTitle,
     Key? key,
@@ -288,7 +295,7 @@ class _contentRow extends StatelessWidget {
       child: Row(
         children: [
           Text(
-            '${title}: ',
+            '$title: ',
             style: const TextStyle(
               fontSize: 21,
               fontWeight: FontWeight.w600,
@@ -306,13 +313,13 @@ class _contentRow extends StatelessWidget {
   }
 }
 
-class _bottomSheet extends StatelessWidget {
+class BottomSheet extends StatelessWidget {
   final String productId;
   final Product product;
   final CartProvider cartProvider;
   final WishlistProvider wishlistProvider;
 
-  const _bottomSheet({
+  const BottomSheet({
     Key? key,
     required this.cartProvider,
     required this.product,
@@ -331,8 +338,10 @@ class _bottomSheet extends StatelessWidget {
             height: 50,
             child: Center(
               child: TextButton(
-                onPressed: cartProvider.cartList.containsKey(productId)
-                    ? () {}
+                onPressed: !cartProvider.cartList.containsKey(productId)
+                    ? () {
+                        print('Pressed empty');
+                      }
                     : () {
                         cartProvider.addToCart(
                           productId,

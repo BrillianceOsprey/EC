@@ -15,27 +15,39 @@ class CategoriesFeedScreen extends StatelessWidget {
     final productProvider = Provider.of<ProductProvider>(context);
     List<Product> productsList = productProvider.getByCatName(catName);
 
+    print("ProductLength ${productsList.length}");
+
     return Scaffold(
       appBar: AppBar(
         title: Text(catName),
+        centerTitle: true,
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: GridView.builder(
-          itemCount: productsList.length,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            childAspectRatio: 2 / 3,
-            crossAxisSpacing: 10,
-            mainAxisSpacing: 10,
-          ),
-          itemBuilder: (ctx, i) {
-            return ChangeNotifierProvider.value(
-              value: productsList[i],
-              child: FeedsProduct(),
-            );
-          },
-        ),
+        child: productsList.isEmpty
+            ? SizedBox(
+                height: MediaQuery.of(context).size.height,
+                child: const Center(
+                    child: Text(
+                  '$routeName Empty',
+                  style: TextStyle(color: Colors.white),
+                )),
+              )
+            : GridView.builder(
+                itemCount: productsList.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 2 / 3,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
+                ),
+                itemBuilder: (ctx, i) {
+                  return ChangeNotifierProvider.value(
+                    value: productsList[i],
+                    child: const FeedsProduct(),
+                  );
+                },
+              ),
       ),
     );
   }
