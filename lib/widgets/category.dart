@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_shop_cpt21/screens/inner_screens/categories_feed_screen.dart';
 
 class Category extends StatefulWidget {
-  late int i;
+  final int i;
 
-  Category({
+  const Category({
     required this.i,
     Key? key,
   }) : super(key: key);
@@ -59,7 +59,8 @@ class _CategoryState extends State<Category> {
         height: 200,
         width: 150,
         decoration: BoxDecoration(
-          border: Border.all(width: 2, color: Colors.grey),
+          border: Border.all(
+              width: 2, color: Theme.of(context).colorScheme.onBackground),
           borderRadius: BorderRadius.circular(12),
         ),
         child: Column(
@@ -70,8 +71,8 @@ class _CategoryState extends State<Category> {
               width: 150,
               child: ClipRRect(
                 borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(12),
-                  topRight: Radius.circular(12),
+                  topLeft: Radius.circular(10),
+                  topRight: Radius.circular(10),
                 ),
                 child: Image.asset(
                   (_categories[widget.i]['catImage']).toString(),

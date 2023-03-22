@@ -43,7 +43,7 @@ class _FeedsScreenState extends State<FeedsScreen> {
             return badges.Badge(
               // toAnimate: true,
               // animationType: BadgeAnimationType.slide,
-              // position: BadgePosition.topEnd(top: 5, end: 7),
+              position: badges.BadgePosition.topEnd(top: 1, end: 2),
               badgeContent: Text(wp.wishlistList.length.toString()),
               child: IconButton(
                 onPressed: () {
@@ -58,6 +58,8 @@ class _FeedsScreenState extends State<FeedsScreen> {
               // toAnimate: true,
               // animationType: BadgeAnimationType.slide,
               // position: BadgePosition.topEnd(top: 5, end: 7),
+
+              position: badges.BadgePosition.topEnd(top: 1, end: 2),
               badgeContent: Text(cp.cartList.length.toString()),
               child: IconButton(
                 onPressed: () {
@@ -84,7 +86,7 @@ class _FeedsScreenState extends State<FeedsScreen> {
             itemBuilder: (ctx, i) {
               return ChangeNotifierProvider.value(
                 value: productsList[i],
-                child: FeedsProduct(),
+                child: const FeedsProduct(),
               );
             },
           ),

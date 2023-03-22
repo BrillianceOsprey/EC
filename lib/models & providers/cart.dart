@@ -31,6 +31,10 @@ class CartProvider with ChangeNotifier {
   }
 
   void addToCart(String pId, String title, String imageUrl, double price) {
+    print('product detail in Function() id  $pId');
+    print('product detail in Function() title  $title');
+    print('product detail in Function() image  $imageUrl');
+    print('product detail in Function() price   $price');
     if (_cartList.containsKey(pId)) {
       _cartList.update(
           pId,

@@ -41,7 +41,7 @@ class ProductProvider with ChangeNotifier {
         productCategoryName: 'Phones',
         quantity: 65,
         isFavorite: false,
-        isPopular: false),
+        isPopular: true),
     Product(
         id: 'Samsung Galaxy A10s',
         title: 'Samsung Galaxy A10s',

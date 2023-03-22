@@ -6,6 +6,7 @@ import 'package:flutter_shop_cpt21/models%20&%20providers/product.dart';
 import 'package:flutter_shop_cpt21/models%20&%20providers/wishlist.dart';
 import 'package:flutter_shop_cpt21/screens/feeds_screen.dart';
 import 'package:flutter_shop_cpt21/screens/inner_screens/brands_nav_rail.dart';
+import 'package:flutter_shop_cpt21/screens/widgets/banner.dart';
 import 'package:flutter_shop_cpt21/screens/wishlist/wishlist_screen.dart';
 import 'package:flutter_shop_cpt21/widgets/back_layer.dart';
 import 'package:flutter_shop_cpt21/widgets/category.dart';
@@ -23,12 +24,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final List<Widget> _carouselImages = [
-    Image.asset('assets/images/carousel1.png'),
-    Image.asset('assets/images/carousel2.jpeg'),
-    Image.asset('assets/images/carousel3.jpeg'),
-    Image.asset('assets/images/carousel4.png'),
-  ];
+  // final List<Widget> _carouselImages = [
+  //   Image.asset('assets/images/carousel1.png'),
+  //   Image.asset('assets/images/carousel2.jpeg'),
+  //   Image.asset('assets/images/carousel3.jpeg'),
+  //   Image.asset('assets/images/carousel4.png'),
+  // ];
 
   final List _swiperImages = [
     'assets/images/addidas.jpeg',
@@ -40,6 +41,13 @@ class _HomeScreenState extends State<HomeScreen> {
     'assets/images/samsung.jpeg',
   ];
   ProductProvider productProvider = ProductProvider();
+  Future<void> getData() async {
+    Future.microtask(() {
+      productProvider.fetchProducts();
+      productProvider.popularProducts;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     // final productData = Provider.of<ProductProvider>(context);
@@ -64,8 +72,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 // position: BadgePosition.topEnd(top: 5, end: 7),
                 badgeContent: Text(
                   wp.wishlistList.length.toString(),
-                  style: TextStyle(color: Colors.white),
+                  style: const TextStyle(color: Colors.white),
                 ),
+                position: badges.BadgePosition.topEnd(top: 1, end: 3),
                 child: IconButton(
                   onPressed: () {
                     Navigator.of(context).pushNamed(WishlistScreen.routeName);
@@ -89,130 +98,135 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
         backLayer: const BackLayer(),
-        frontLayer: ListView(
-          children: [
-            SizedBox(
-              height: 200,
-              width: double.infinity,
-              child: Carousel(
-                images: _carouselImages,
-                indicatorBgPadding: 7,
-                dotSize: 5,
-                boxFit: BoxFit.fill,
+        frontLayer: RefreshIndicator(
+          onRefresh: getData,
+          child: ListView(
+            children: [
+              const SizedBox(width: double.infinity, child: CarouselSlide()
+                  // Carousel(
+                  //   images: _carouselImages,
+                  //   indicatorBgPadding: 7,
+                  //   dotSize: 5,
+                  //   boxFit: BoxFit.fill,
+                  // ),
+                  ),
+              const SizedBox(height: 20),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8.0),
+                child: Text(
+                  'Categories',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+                ),
               ),
-            ),
-            const SizedBox(height: 20),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8.0),
-              child: Text(
-                'Categories',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+              const SizedBox(height: 8),
+              SizedBox(
+                height: 200,
+                width: double.infinity,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: 7,
+                  itemBuilder: (ctx, i) {
+                    return Row(
+                      children: [
+                        Category(
+                          i: i,
+                        ),
+                        const SizedBox(width: 10),
+                      ],
+                    );
+                  },
+                ),
               ),
-            ),
-            const SizedBox(height: 8),
-            SizedBox(
-              height: 200,
-              width: double.infinity,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: 7,
-                itemBuilder: (ctx, i) {
-                  return Row(
-                    children: [
-                      Category(
-                        i: i,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Popular Brands',
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+                    ),
+                    TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pushNamed(
+                            BrandsNavRailScreen.routeName,
+                            arguments: 7,
+                          );
+                        },
+                        child: const Text('view all')),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 200,
+                width: double.infinity,
+                child: Swiper(
+                  onTap: (index) {
+                    Navigator.of(context).pushNamed(
+                      BrandsNavRailScreen.routeName,
+                      arguments: index,
+                    );
+                  },
+                  autoplay: true,
+                  viewportFraction: 0.8,
+                  scale: 0.9,
+                  itemCount: _swiperImages.length,
+                  itemBuilder: (ctx, i) {
+                    return Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        border: Border.all(
+                            width: 2,
+                            color: Theme.of(context).colorScheme.onBackground),
+                        borderRadius: BorderRadius.circular(12),
                       ),
-                      const SizedBox(width: 10),
-                    ],
-                  );
-                },
+                      child: Image.asset(
+                        _swiperImages[i],
+                        fit: BoxFit.contain,
+                      ),
+                    );
+                  },
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    'Popular Brands',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-                  ),
-                  TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pushNamed(
-                          BrandsNavRailScreen.routeName,
-                          arguments: 7,
-                        );
-                      },
-                      child: const Text('view all')),
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 200,
-              width: double.infinity,
-              child: Swiper(
-                onTap: (index) {
-                  Navigator.of(context).pushNamed(
-                    BrandsNavRailScreen.routeName,
-                    arguments: index,
-                  );
-                },
-                autoplay: true,
-                viewportFraction: 0.8,
-                scale: 0.9,
-                itemCount: _swiperImages.length,
-                itemBuilder: (ctx, i) {
-                  return Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border.all(width: 2, color: Colors.grey),
-                      borderRadius: BorderRadius.circular(12),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Popular Products',
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
                     ),
-                    child: Image.asset(
-                      _swiperImages[i],
-                      fit: BoxFit.contain,
-                    ),
-                  );
-                },
+                    TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pushNamed(
+                            FeedsScreen.routeName,
+                            arguments: 'popular',
+                          );
+                        },
+                        child: const Text('view all')),
+                  ],
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    'Popular Products',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-                  ),
-                  TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pushNamed(
-                          FeedsScreen.routeName,
-                          arguments: 'popular',
-                        );
-                      },
-                      child: const Text('view all')),
-                ],
+              SizedBox(
+                // color: Colors.amber,
+                height: 300,
+                width: double.infinity,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: popularProduct.length,
+                  itemBuilder: (ctx, i) {
+                    return ChangeNotifierProvider.value(
+                      value: popularProduct[i],
+                      child: const PopularProducts(),
+                    );
+                  },
+                ),
               ),
-            ),
-            SizedBox(
-              // color: Colors.amber,
-              height: 300,
-              width: double.infinity,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: popularProduct.length,
-                itemBuilder: (ctx, i) {
-                  return ChangeNotifierProvider.value(
-                    value: popularProduct[i],
-                    child: const PopularProducts(),
-                  );
-                },
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -32,7 +32,7 @@ class ProductDetailsScreenState extends State<ProductDetailsScreen> {
     List<Product> productsList = productProvider.products();
     print('productId list $productsList');
     final product = productProvider.getById(productId);
-    print('productId list ${product.title}');
+    print('productId lists ${cartProvider.cartList}');
 
     // final cartProvider = Provider.of<CartProvider>(context);
     // final wishlistProvider = Provider.of<WishlistProvider>(context);
@@ -161,7 +161,7 @@ class ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       Padding(
                         padding: const EdgeInsets.all(16),
                         child: Text(
-                          '${product.description}',
+                          product.description,
                           style: const TextStyle(
                             fontSize: 21,
                             fontWeight: FontWeight.w600,
@@ -179,7 +179,7 @@ class ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       ),
                       ContentRow(
                         title: 'Brand',
-                        nameTitle: '${product.brand}',
+                        nameTitle: product.brand,
                       ),
                       ContentRow(
                         title: 'Quantity',
@@ -187,7 +187,7 @@ class ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       ),
                       ContentRow(
                         title: 'Category',
-                        nameTitle: '${product.productCategoryName}',
+                        nameTitle: product.productCategoryName,
                       ),
                       ContentRow(
                         title: 'Popularity',
@@ -313,7 +313,7 @@ class ContentRow extends StatelessWidget {
   }
 }
 
-class BottomSheet extends StatelessWidget {
+class BottomSheet extends StatefulWidget {
   final String productId;
   final Product product;
   final CartProvider cartProvider;
@@ -328,7 +328,17 @@ class BottomSheet extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<BottomSheet> createState() => _BottomSheetState();
+}
+
+class _BottomSheetState extends State<BottomSheet> {
+  @override
   Widget build(BuildContext context) {
+    // print('product detail id${widget.productId}');
+    // print('product detail title${widget.product.title}');
+    // print('product detail image${widget.product.imageUrl}');
+    // print('product detail price ${widget.product.price}');
+    // print('product detail List ${widget.cartProvider.cartList.length}');
     return Row(
       children: [
         Expanded(
@@ -338,20 +348,31 @@ class BottomSheet extends StatelessWidget {
             height: 50,
             child: Center(
               child: TextButton(
-                onPressed: !cartProvider.cartList.containsKey(productId)
-                    ? () {
-                        print('Pressed empty');
-                      }
-                    : () {
-                        cartProvider.addToCart(
-                          productId,
-                          product.title,
-                          product.imageUrl,
-                          product.price,
-                        );
-                      },
+                onPressed:
+                    widget.cartProvider.cartList.containsKey(widget.productId)
+                        ? () {
+                            // print(cartProvider.cartList.containsKey(productId));
+                            // cartProvider.addToCart(
+                            //   productId,
+                            //   product.title,
+                            //   product.imageUrl,
+                            //   product.price,
+                            // );
+                          }
+                        : () {
+                            setState(() {
+                              print(widget.cartProvider.cartList
+                                  .containsKey(widget.productId));
+                              widget.cartProvider.addToCart(
+                                widget.productId,
+                                widget.product.title,
+                                widget.product.imageUrl,
+                                widget.product.price,
+                              );
+                            });
+                          },
                 child: Text(
-                  cartProvider.cartList.containsKey(productId)
+                  widget.cartProvider.cartList.containsKey(widget.productId)
                       ? 'IN CART'
                       : 'ADD TO CART',
                   style: const TextStyle(fontSize: 18, color: Colors.white),
@@ -384,14 +405,15 @@ class BottomSheet extends StatelessWidget {
             child: Center(
               child: IconButton(
                 onPressed: () {
-                  wishlistProvider.addOrRemoveFromWishlist(
-                    productId,
-                    product.title,
-                    product.imageUrl,
-                    product.price,
+                  widget.wishlistProvider.addOrRemoveFromWishlist(
+                    widget.productId,
+                    widget.product.title,
+                    widget.product.imageUrl,
+                    widget.product.price,
                   );
                 },
-                icon: wishlistProvider.wishlistList.containsKey(productId)
+                icon: widget.wishlistProvider.wishlistList
+                        .containsKey(widget.productId)
                     ? const Icon(
                         Icons.favorite,
                         color: Colors.red,

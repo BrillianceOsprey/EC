@@ -19,7 +19,8 @@ class PopularProducts extends StatelessWidget {
         height: 300,
         width: 250,
         decoration: BoxDecoration(
-          border: Border.all(width: 2, color: Colors.grey),
+          border: Border.all(
+              width: 2, color: Theme.of(context).colorScheme.onBackground),
           borderRadius: BorderRadius.circular(12),
         ),
         child: Column(

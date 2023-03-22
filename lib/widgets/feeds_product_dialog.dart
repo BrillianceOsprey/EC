@@ -32,11 +32,11 @@ class FeedsProductDialog extends StatelessWidget {
                     );
                   },
                   icon: wp.wishlistList.containsKey(product.id)
-                      ? Icon(
+                      ? const Icon(
                           Icons.favorite,
                           color: Colors.red,
                         )
-                      : Icon(
+                      : const Icon(
                           Icons.favorite,
                           color: Colors.white,
                         ),
@@ -56,11 +56,11 @@ class FeedsProductDialog extends StatelessWidget {
                     );
                   },
                   icon: cp.cartList.containsKey(product.id)
-                      ? Icon(
+                      ? const Icon(
                           Icons.shopping_cart,
                           color: Colors.red,
                         )
-                      : Icon(
+                      : const Icon(
                           Icons.shopping_cart,
                           color: Colors.white,
                         ),
@@ -78,7 +78,7 @@ class FeedsProductDialog extends StatelessWidget {
                     arguments: product.id,
                   );
                 },
-                icon: Icon(
+                icon: const Icon(
                   Icons.remove_red_eye,
                   color: Colors.white,
                 ),
