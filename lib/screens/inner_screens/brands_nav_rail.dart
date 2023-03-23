@@ -8,7 +8,7 @@ class BrandsNavRailScreen extends StatefulWidget {
   const BrandsNavRailScreen({Key? key}) : super(key: key);
 
   @override
-  _BrandsNavRailScreenState createState() => _BrandsNavRailScreenState();
+  State<BrandsNavRailScreen> createState() => _BrandsNavRailScreenState();
 }
 
 class _BrandsNavRailScreenState extends State<BrandsNavRailScreen> {
@@ -78,11 +78,11 @@ class _BrandsNavRailScreenState extends State<BrandsNavRailScreen> {
                   child: IntrinsicHeight(
                     child: NavigationRail(
                       minWidth: 60,
-                      selectedLabelTextStyle: const TextStyle(
-                        letterSpacing: 2.5,
-                        fontSize: 25,
-                        decoration: TextDecoration.underline,
-                      ),
+                      selectedLabelTextStyle: TextStyle(
+                          letterSpacing: 2.5,
+                          fontSize: 25,
+                          decoration: TextDecoration.underline,
+                          color: Theme.of(context).colorScheme.onBackground),
                       leading: const Padding(
                         padding: EdgeInsets.only(top: 50.0),
                         child: CircleAvatar(
@@ -165,7 +165,9 @@ class _BrandsNavRailScreenState extends State<BrandsNavRailScreen> {
       icon: const Icon(null),
       label: RotatedBox(
         quarterTurns: 3,
-        child: Text(text),
+        child: Text(
+          text,
+        ),
       ),
     );
   }
@@ -203,7 +205,7 @@ class ContentSpace extends StatelessWidget {
               itemBuilder: (ctx, i) {
                 return ChangeNotifierProvider.value(
                   value: productBrand[i],
-                  child: BrandNavRailWidget(),
+                  child: const BrandNavRailWidget(),
                 );
               },
             ),

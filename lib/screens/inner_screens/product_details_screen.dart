@@ -1,5 +1,6 @@
 import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
+import 'package:flutter_shop_cpt21/core/helpers/logger.dart';
 import 'package:flutter_shop_cpt21/models%20&%20providers/cart.dart';
 import 'package:flutter_shop_cpt21/models%20&%20providers/product.dart';
 import 'package:flutter_shop_cpt21/models%20&%20providers/wishlist.dart';
@@ -26,16 +27,8 @@ class ProductDetailsScreenState extends State<ProductDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     final productId = ModalRoute.of(context)!.settings.arguments as String;
-    print('productId $productId');
-    // final productProvider = Provider.of<ProductProvider>(context);
-    // print('productId provider ${productProvider.products()}');
     List<Product> productsList = productProvider.products();
-    print('productId list $productsList');
     final product = productProvider.getById(productId);
-    print('productId lists ${cartProvider.cartList}');
-
-    // final cartProvider = Provider.of<CartProvider>(context);
-    // final wishlistProvider = Provider.of<WishlistProvider>(context);
 
     return Scaffold(
       bottomSheet: BottomSheet(
@@ -334,11 +327,13 @@ class BottomSheet extends StatefulWidget {
 class _BottomSheetState extends State<BottomSheet> {
   @override
   Widget build(BuildContext context) {
-    // print('product detail id${widget.productId}');
-    // print('product detail title${widget.product.title}');
-    // print('product detail image${widget.product.imageUrl}');
-    // print('product detail price ${widget.product.price}');
-    // print('product detail List ${widget.cartProvider.cartList.length}');
+    Logger.w('product detail in function()', widget.product.id);
+    // Logger.w('product detail in function() detail id', widget.productId);
+    Logger.w('product detail in function() detail provider',
+        widget.cartProvider.cartList.containsKey(widget.product.id));
+    // Logger.w('product detail in function() detail provider',
+    //     widget.cartProvider.cartList);
+
     return Row(
       children: [
         Expanded(
@@ -346,39 +341,50 @@ class _BottomSheetState extends State<BottomSheet> {
           child: Container(
             color: Colors.pinkAccent,
             height: 50,
-            child: Center(
-              child: TextButton(
-                onPressed:
-                    widget.cartProvider.cartList.containsKey(widget.productId)
-                        ? () {
-                            // print(cartProvider.cartList.containsKey(productId));
-                            // cartProvider.addToCart(
-                            //   productId,
-                            //   product.title,
-                            //   product.imageUrl,
-                            //   product.price,
-                            // );
-                          }
-                        : () {
-                            setState(() {
-                              print(widget.cartProvider.cartList
-                                  .containsKey(widget.productId));
-                              widget.cartProvider.addToCart(
-                                widget.productId,
-                                widget.product.title,
-                                widget.product.imageUrl,
-                                widget.product.price,
-                              );
-                            });
-                          },
+            child: Center(child: Consumer<CartProvider>(builder: (cxt, cp, _) {
+              return TextButton(
+                onPressed: () {
+                  cp.addToCart(
+                    widget.productId,
+                    widget.product.title,
+                    widget.product.imageUrl,
+                    widget.product.price,
+                  );
+                },
+                // widget.cartProvider.cartList.containsKey(widget.productId)
+                //     ? () {
+                //         // print(cartProvider.cartList.containsKey(productId));
+                //         // cartProvider.addToCart(
+                //         //   productId,
+                //         //   product.title,
+                //         //   product.imageUrl,
+                //         //   product.price,
+                //         // );
+                //       }
+                //     : () {
+                //         setState(() {
+                //           // print(widget.cartProvider.cartList
+                //           //     .containsKey(widget.productId));
+                //           Logger.i(
+                //               'product detail in function() add to cart',
+                //               widget.cartProvider.cartList
+                //                   .containsKey(widget.productId));
+                //           widget.cartProvider.addToCart(
+                //             widget.productId,
+                //             widget.product.title,
+                //             widget.product.imageUrl,
+                //             widget.product.price,
+                //           );
+                //         });
+                //       },
                 child: Text(
-                  widget.cartProvider.cartList.containsKey(widget.productId)
+                  cp.cartList.containsKey(widget.productId)
                       ? 'IN CART'
                       : 'ADD TO CART',
                   style: const TextStyle(fontSize: 18, color: Colors.white),
                 ),
-              ),
-            ),
+              );
+            })),
           ),
         ),
         Expanded(
@@ -403,22 +409,25 @@ class _BottomSheetState extends State<BottomSheet> {
             color: Colors.grey.withOpacity(0.2),
             height: 50,
             child: Center(
-              child: IconButton(
-                onPressed: () {
-                  widget.wishlistProvider.addOrRemoveFromWishlist(
-                    widget.productId,
-                    widget.product.title,
-                    widget.product.imageUrl,
-                    widget.product.price,
+              child: Consumer<WishlistProvider>(
+                builder: (cxt, wp, _) {
+                  return IconButton(
+                    onPressed: () {
+                      wp.addOrRemoveFromWishlist(
+                        widget.productId,
+                        widget.product.title,
+                        widget.product.imageUrl,
+                        widget.product.price,
+                      );
+                    },
+                    icon: wp.wishlistList.containsKey(widget.productId)
+                        ? const Icon(
+                            Icons.favorite,
+                            color: Colors.red,
+                          )
+                        : const Icon(Icons.favorite_border),
                   );
                 },
-                icon: widget.wishlistProvider.wishlistList
-                        .containsKey(widget.productId)
-                    ? const Icon(
-                        Icons.favorite,
-                        color: Colors.red,
-                      )
-                    : const Icon(Icons.favorite_border),
               ),
             ),
           ),

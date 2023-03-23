@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_shop_cpt21/core/helpers/logger.dart';
 import 'package:flutter_shop_cpt21/models%20&%20providers/cart.dart';
 import 'package:flutter_shop_cpt21/models%20&%20providers/product.dart';
 import 'package:flutter_shop_cpt21/services/global_methods.dart';
@@ -31,6 +32,8 @@ class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
     final cartProvider = Provider.of<CartProvider>(context);
+    Logger.clap(
+        'product detail in function() cart screen', {cartProvider.cartList});
     GlobalMethods globalMethods = GlobalMethods();
     return cartProvider.cartList.isEmpty
         ? const Scaffold(
@@ -77,7 +80,7 @@ class _CartScreenState extends State<CartScreen> {
 }
 
 Widget _bottomCheckoutSectiomn(BuildContext context, double totalAmount) {
-  var _uuid = Uuid();
+  var uuid = const Uuid();
 
   final cartProvider = Provider.of<CartProvider>(context);
 
@@ -141,9 +144,9 @@ Widget _bottomCheckoutSectiomn(BuildContext context, double totalAmount) {
               //   });
               // }
             },
-            child: Text(
+            child: const Text(
               '   C H E C K O U T   ',
-              style: const TextStyle(
+              style: TextStyle(
                 color: Colors.white,
               ),
             ),

@@ -200,13 +200,14 @@ class _HomeScreenState extends State<HomeScreen> {
                           TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
                     ),
                     TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pushNamed(
-                            FeedsScreen.routeName,
-                            arguments: 'popular',
-                          );
-                        },
-                        child: const Text('view all')),
+                      onPressed: () {
+                        Navigator.of(context).pushNamed(
+                          FeedsScreen.routeName,
+                          arguments: 'popular',
+                        );
+                      },
+                      child: const Text('view all'),
+                    ),
                   ],
                 ),
               ),

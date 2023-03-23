@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_shop_cpt21/core/helpers/logger.dart';
 
 class Cart with ChangeNotifier {
   final String cartId;
@@ -31,6 +32,7 @@ class CartProvider with ChangeNotifier {
   }
 
   void addToCart(String pId, String title, String imageUrl, double price) {
+    Logger.clap('product detail in function() Listttt', cartList);
     print('product detail in Function() id  $pId');
     print('product detail in Function() title  $title');
     print('product detail in Function() image  $imageUrl');

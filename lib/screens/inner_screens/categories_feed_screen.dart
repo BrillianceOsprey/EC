@@ -27,10 +27,10 @@ class CategoriesFeedScreen extends StatelessWidget {
         child: productsList.isEmpty
             ? SizedBox(
                 height: MediaQuery.of(context).size.height,
-                child: const Center(
+                child: Center(
                     child: Text(
-                  '$routeName Empty',
-                  style: TextStyle(color: Colors.white),
+                  '$catName are empty',
+                  style: const TextStyle(color: Colors.white),
                 )),
               )
             : GridView.builder(

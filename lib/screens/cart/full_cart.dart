@@ -21,10 +21,10 @@ class FullCart extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _FullCartState createState() => _FullCartState();
+  FullCartState createState() => FullCartState();
 }
 
-class _FullCartState extends State<FullCart> {
+class FullCartState extends State<FullCart> {
   @override
   // double subTotaal = widget.quantity * widget.price;
   Widget build(BuildContext context) {
